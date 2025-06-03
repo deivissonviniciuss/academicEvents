@@ -46,5 +46,5 @@ It models different types of events and participants, and allows registration, c
 
 ##
 
-- Developed by [Seu Nome Aqui]
+- Developed by Deivisson Vinicius França de Jesus
 - Third semester – IFBA – Programming Oriented to Objects
