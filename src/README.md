@@ -42,6 +42,7 @@ It models different types of events and participants, and allows registration, c
    javac -d bin src/events/*.java src/participants/*.java src/main/*.java
 
 2. Run:
+   ```bash
     java -cp bin main.Main
 
 ##
