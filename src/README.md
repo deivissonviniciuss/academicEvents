@@ -1,0 +1,50 @@
+# Academic Event Management System
+
+This is a Java-based academic event management system developed as a university assignment.  
+It models different types of events and participants, and allows registration, certificate generation, and event reporting.
+
+---
+
+## Features
+
+- Supports different **event types**:
+  - `Lecture`
+  - `Course` (only accepts `Student`)
+  - `Workshop`
+  - `AcademicFair`
+
+- Supports different **participant roles**:
+  - `Student`
+  - `Professor`
+  - `Guest`
+
+- **Certificate generation** per participant
+- **Specific event information** depending on event type (e.g. speaker, number of lessons)
+- **Event modes**: `IN_PERSON` and `ONLINE`, with different registration rules
+- **Event report**:
+  - By **type**
+  - By **date**
+
+---
+
+## Technologies
+
+- Java 17+
+- VS Code
+- Git & GitHub
+
+---
+
+## How to Run
+
+1. Compile:
+   ```bash
+   javac -d bin src/events/*.java src/participants/*.java src/main/*.java
+
+2. Run:
+    java -cp bin main.Main
+
+##
+
+- Developed by [Seu Nome Aqui]
+- Third semester – IFBA – Programming Oriented to Objects
