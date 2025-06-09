@@ -1,12 +1,17 @@
 package participants;
 
 public abstract class Participant {
+    private List<Participant> participants = new ArrayList<>();
     protected String name;
     protected String email;
 
     public Participant(String name, String email){
         this.name = name;
         this.email = email;
+    }
+
+    public void addParticipant(Participant participant) {
+        participants.add(participant);
     }
 
     public String getName(){

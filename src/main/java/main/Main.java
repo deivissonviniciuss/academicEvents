@@ -40,7 +40,7 @@ public class Main {
                         case 1: 
                             System.out.print("Digite o nome do palestrante: ");
                             String speaker = scanner.nextLine();
-                            events.add() = new Lecture(title, date, location, capacity, description, mode, speaker);
+                            event = new Lecture(title, date, location, capacity, description, mode, speaker);
                             break;
                         case 2:
                             System.out.print("Digite o número de aulas: ");
@@ -100,6 +100,9 @@ public class Main {
                         default:
                             System.out.println("Opção inválida!");
                             return;
+                    }
+                    if(participant != NULL){
+                        Participant.addParticipant(participant);
                     }
                     break;
                 case 3:
