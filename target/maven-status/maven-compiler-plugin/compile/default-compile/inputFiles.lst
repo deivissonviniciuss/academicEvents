@@ -1,0 +1,14 @@
+/workspaces/academicEvents/src/main/java/events/AcademicFair.java
+/workspaces/academicEvents/src/main/java/events/Certifiable.java
+/workspaces/academicEvents/src/main/java/events/Course.java
+/workspaces/academicEvents/src/main/java/events/Event.java
+/workspaces/academicEvents/src/main/java/events/EventManager.java
+/workspaces/academicEvents/src/main/java/events/EventMode.java
+/workspaces/academicEvents/src/main/java/events/Lecture.java
+/workspaces/academicEvents/src/main/java/events/Workshop.java
+/workspaces/academicEvents/src/main/java/main/Main.java
+/workspaces/academicEvents/src/main/java/participants/Guest.java
+/workspaces/academicEvents/src/main/java/participants/Participant.java
+/workspaces/academicEvents/src/main/java/participants/Professor.java
+/workspaces/academicEvents/src/main/java/participants/Student.java
+/workspaces/academicEvents/src/main/java/util/ConsolePrinter.java

@@ -1,7 +1,9 @@
 package events;
 
+
 import java.util.ArrayList;
 import java.util.List;
+import util.ConsolePrinter;
 
 public class EventManager {
     private List<Event> events = new ArrayList<>();
@@ -24,23 +26,45 @@ public class EventManager {
     }
 
     public void listEventsByType(String type) {
-        System.out.println("=== Events of type: " + type + " ===");
-        for (Event event : events) {
+        ConsolePrinter.printTitle("Event Report by Type: " + type);
+        int count = 0;
+        
+        for (Event event : this.events) {
             if (event.getEventType().equalsIgnoreCase(type)) {
                 printEventInfo(event);
+                count++;
             }
         }
-        System.out.println("Found " + event.getEventCount + " events associated with the search.");
+        
+        ConsolePrinter.printSeparator();
+        if (count > 0) {
+            ConsolePrinter.printSuccess("Found " + count + " event(s) matching the criteria (List events by type "+ type + ").");
+        } else {
+            ConsolePrinter.printError("No events found for the specified type.");
+        }
+        ConsolePrinter.printSeparator();
     }
 
     public void listEventsByDate(String date) {
-        System.out.println("=== Events (TESTANDO) on date: " + date + " ===");
-        for (Event event : events) {
+        ConsolePrinter.printTitle("Event Report by Date: " + date);
+        int count = 0;
+        
+        for (Event event : this.events) {
             if (event.getDate().equalsIgnoreCase(date)) {
                 printEventInfo(event);
+                count++;
             }
         }
-        System.out.println("Found " + event.getEventCount + " events associated with the search.");
+        
+        ConsolePrinter.printSeparator();
+
+        if (count > 0) {
+            ConsolePrinter.printSuccess("Found " + count + " event(s) matching the criteria (List events by date " + date + ").");
+        } else {
+            ConsolePrinter.printError("No events found for the specified date.");
+        }
+
+        ConsolePrinter.printSeparator();
     }
 
     public List<Event> getAllEvents() {

@@ -1,6 +1,7 @@
 package events;
 
 import participants.Participant;
+import util.ConsolePrinter;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -84,22 +85,30 @@ public abstract class Event implements Certifiable
     }
     
     @Override
-    public void generateCertificate(Participant participant){
-        if (!(participants.contains(participant))) {
-            System.out.println("This participant is not registered in this event.");
+    public void generateCertificate(Participant participant) {
+        if (!participants.contains(participant)) {
+            ConsolePrinter.printError("This participant is not registered for this event.");
             return;
         }
 
-        System.out.println("\n----- CERTIFICATE -----");
-        System.out.println("This certifies that " + participant.getName() + " has successfully participated in the " + getEventType() + ":");
-        System.out.println("Title: " + title);
-        System.out.println("Mode of event: " + getMode());
-        System.out.println("Date: " + date);
-        System.out.println("Location: " + location);
-        System.out.println(getSpecificInfoEvent());
-        System.out.println(participant.getSpecificInfoParticipant());
-        System.out.println(participant.getEmail());
-        System.out.println("------------------------\n");
+        ConsolePrinter.printSeparator();
+        ConsolePrinter.printSectionHeader("\n----- CERTIFICATE OF PARTICIPATION -----");
+        
+        ConsolePrinter.printText("This is to certify that the participant below:");
+        
+        ConsolePrinter.printInfo("Name", participant.getName());
+        ConsolePrinter.printInfo("Contact (Email)", participant.getEmail());
+        ConsolePrinter.printInfo("Participant Details", participant.getSpecificInfoParticipant());
+        
+        ConsolePrinter.printText("\nhas successfully participated in the event:");
+        
+        ConsolePrinter.printInfo("Event", this.title);
+        ConsolePrinter.printInfo("Type", this.getEventType());
+        ConsolePrinter.printInfo("Date", this.date);
+        ConsolePrinter.printInfo("Location", this.location);
+        ConsolePrinter.printInfo("Event Details", this.getSpecificInfoEvent());
+        
+        ConsolePrinter.printSeparator();
     }
     
 }

@@ -43,11 +43,11 @@ The system uses an `EventMode` enum to define whether an event is `IN_PERSON` or
 
 1. Compile:
    ```bash
-   javac -d bin src/events/*.java src/participants/*.java src/main/*.java
+   mvn compile
 
 2. Run:
    ```bash
-    java -cp bin main.Main
+    mvn exec:java
 
 ##
 
