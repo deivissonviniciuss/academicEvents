@@ -7,6 +7,7 @@ public abstract class Participant {
     public Participant(String name, String email){
         this.name = name;
         this.email = email;
+        participantCount++;
     }
 
     public String getName(){

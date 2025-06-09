@@ -13,6 +13,12 @@ It models different types of events and participants, and allows registration, c
   - `Workshop`
   - `AcademicFair`
 
+- Supports different **event modes**:
+
+The system uses an `EventMode` enum to define whether an event is `IN_PERSON` or `ONLINE`. This prevents typos, enforces valid values at compile time, and simplifies control logic in registration. It also makes the code more maintainable and expandable, allowing new modes like `HYBRID` to be added easily in the future.
+
+---
+
 - Supports different **participant roles**:
   - `Student`
   - `Professor`
@@ -24,8 +30,6 @@ It models different types of events and participants, and allows registration, c
 - **Event report**:
   - By **type**
   - By **date**
-
----
 
 ## Technologies
 

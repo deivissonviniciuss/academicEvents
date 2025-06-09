@@ -30,15 +30,17 @@ public class EventManager {
                 printEventInfo(event);
             }
         }
+        System.out.println("Found " + event.getEventCount + " events associated with the search.");
     }
 
     public void listEventsByDate(String date) {
-        System.out.println("=== Events on date: " + date + " ===");
+        System.out.println("=== Events (TESTANDO) on date: " + date + " ===");
         for (Event event : events) {
             if (event.getDate().equalsIgnoreCase(date)) {
                 printEventInfo(event);
             }
         }
+        System.out.println("Found " + event.getEventCount + " events associated with the search.");
     }
 
     public List<Event> getAllEvents() {

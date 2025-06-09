@@ -4,8 +4,10 @@ import participants.Participant;
 import java.util.List;
 import java.util.ArrayList;
 
-public abstract class Event
+public abstract class Event implements Certifiable
 {
+    private static int eventCount = 0;
+
     protected String title;
     protected String date;
     protected String location;
@@ -22,6 +24,11 @@ public abstract class Event
         this.capacity = capacity;
         this.description = description;
         this.mode = mode;
+        eventCount++;
+    }
+
+    public static int getEventCount() {
+        return eventCount;
     }
 
     public List<Participant> getParticipants(){
@@ -75,7 +82,8 @@ public abstract class Event
             System.out.println("Error: Unknown event mode.");
         }
     }
-   
+    
+    @Override
     public void generateCertificate(Participant participant){
         if (!(participants.contains(participant))) {
             System.out.println("This participant is not registered in this event.");
