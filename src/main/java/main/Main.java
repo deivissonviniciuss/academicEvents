@@ -3,6 +3,9 @@ package main;
 import java.util.*;
 import util.ConsolePrinter;
 
+import participants.*;
+import events.*;
+
 
 public class Main {
 
@@ -18,12 +21,86 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    ConsolePrinter.printSectionHeader("Add New Event");
-                    // TODO: Implement the logic to add a new event here.
+                    displayEventMenu();
+                    int choiceEvent = readUserChoice();
+
+                    System.out.print("Digite o nome do evento: ");
+                    String title = scanner.nextLine();
+                        
+                    System.out.print("Digite a data do evento (dd/mm/yyyy): ");
+                    String date = scanner.nextLine();
+
+                    System.out.print("Digite o local do evento: ");
+                    String location = scanner.nextLine();
+
+                    System.out.print("Digite o modo do evento (IN_PERSON/ONLINE): ");
+                    String modeImput = scanner.nextLine();
+
+                    switch (choiceEvent) {
+                        case 1: 
+                            System.out.print("Digite o nome do palestrante: ");
+                            String speaker = scanner.nextLine();
+                            events.add() = new Lecture(title, date, location, capacity, description, mode, speaker);
+                            break;
+                        case 2:
+                            System.out.print("Digite o número de aulas: ");
+                            int numberOfLessons = scanner.nextInt();
+                            event = new Course(title, date, location, capacity, description, mode, numberOfLessons);
+                            break;
+                        case 3:
+                            System.out.print("Digite o tema principal: ");
+                            int mainTopic = scanner.nextInt();
+                            event = new AcademicFair(title, date, location, capacity, description, mode, mainTopic);
+                            break;
+                        case 4:
+                            System.out.print("Digite a duração do curso (em horas): ");
+                            String durationInHours = scanner.nextLine();
+                            event = new Workshop(title, date, location, capacity, description, mode, durationInHours);
+                            break;
+                        default:
+                            System.out.println("Opção inválida!");
+                            return;
+                    }
+                    if(event != NULL){
+                        EventManager.addEvent(event);
+                    }
                     break;
                 case 2:
-                    ConsolePrinter.printSectionHeader("Add New Participant");
-                    // TODO: Implement the logic to add a new participant here.
+                
+                    int choiceParticipant = readUserChoice();
+
+                    System.out.print("Digite o nome do participante: ");
+                    String name = scanner.nextLine();
+                        
+                    System.out.print("Digite o email do participante: ");
+                    String email = scanner.nextLine();
+
+                    switch (choiceParticipant) {
+                        case 1: 
+                            System.out.print("Digite o employee Id: ");
+                            String employeeId = scanner.nextLine();
+
+                            System.out.print("Digite o departamento: ");
+                            String department = scanner.nextLine();
+
+                            participant = new Professor(name, email, employeeId, department);
+                            break;
+                        case 2:
+                            System.out.print("Digite o enrollment Id: ");
+                            String enrollmentId = scanner.nextLine();
+
+                            participant = new Student(name, email, enrollmentId);
+                            break;
+                        case 3:
+                            System.out.print("Digite o guest Id: ");
+                            String guestId = scanner.nextLine();
+
+                            participant = new Guest(name, email, guestId);
+                            break;
+                        default:
+                            System.out.println("Opção inválida!");
+                            return;
+                    }
                     break;
                 case 3:
                     ConsolePrinter.printSectionHeader("Register Participant in Event");
@@ -65,6 +142,16 @@ public class Main {
         ConsolePrinter.printText("4: List Events (Reports) ");
         ConsolePrinter.printText("5: Generate Certificate ");
         ConsolePrinter.printText("0: Exit");
+        System.out.print("\nChoose an option: ");
+    }
+
+    private static void displayEventMenu() {
+        ConsolePrinter.printSectionHeader("Add New Participant");
+        System.out.println("Escolha o tipo de participante:");
+        System.out.println("1 - Professor (Lecture)");
+        System.out.println("2 - Aluno");
+        System.out.println("3 - Convidado");
+        System.out.println("0 - Voltar");
         System.out.print("\nChoose an option: ");
     }
 
