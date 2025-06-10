@@ -45,7 +45,7 @@ public class ConsolePrinter {
      * Imprime uma mensagem de erro, em vermelho e negrito para dar ênfase.
      */
     public static void printError(String text) {
-        System.out.println(ansi().bold().fg(RED).a("✗ Erro: " + text).reset());
+        System.out.println(ansi().bold().fg(RED).a("✗ Error: " + text).reset());
     }
 
     /**

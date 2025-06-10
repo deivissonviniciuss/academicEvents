@@ -5,18 +5,23 @@ import util.ConsolePrinter;
 import java.util.List;
 import java.util.ArrayList;
 
-public abstract class Event implements Certifiable
-{
-    private static int eventCount = 0;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import java.io.IOException;
 
+public abstract class Event implements ICertifiable
+{
+    protected List<Participant> participants = new ArrayList<>();
+
+    private static int eventCount = 0;
     protected String title;
     protected String date;
     protected String location;
     protected int capacity;
     protected String description;
     protected EventMode mode;
-
-    protected List<Participant> participants = new ArrayList<>();
 
     public Event(String title, String date, String location, int capacity, String description, EventMode mode){
         this.title = title;
@@ -66,6 +71,11 @@ public abstract class Event implements Certifiable
     protected abstract String getSpecificInfoEvent();
 
     public void registerParticipant(Participant participant){
+        if (participants.contains(participant)) {
+            System.out.println("Participant " + participant.getName() + " is already registered in this event.");
+            return;
+        }
+
         if(participants.size() >= capacity){
             System.out.println(getEventType() + " is full. Cannot register " + participant.getName() + " ("+ participant.getParticipantType()+").");
             return;
@@ -109,6 +119,82 @@ public abstract class Event implements Certifiable
         ConsolePrinter.printInfo("Event Details", this.getSpecificInfoEvent());
         
         ConsolePrinter.printSeparator();
+    }
+
+    public void generateCertificate(Participant participant, String text) {
+        if (!this.participants.contains(participant)) {
+            ConsolePrinter.printError("This participant is not registered for this event.");
+            return;
+        }
+
+        String fileName = "Certificate-" + participant.getName().replace(" ", "_") + ".pdf";
+
+        try (PDDocument document = new PDDocument()) {
+            PDPage page = new PDPage();
+            document.addPage(page);
+
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
+            // Define a posição inicial e as fontes
+            float y = 700;
+            float margin = 50;
+            float width = page.getMediaBox().getWidth() - 2 * margin;
+
+            // Título do Certificado
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 20);
+            contentStream.newLineAtOffset(margin, y);
+            contentStream.showText("CERTIFICATE OF PARTICIPATION");
+            contentStream.endText();
+
+            y -= 50; // Move para baixo
+
+            // Corpo do texto
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.HELVETICA, 12);
+            contentStream.newLineAtOffset(margin, y);
+            contentStream.showText("This is to certify that " + participant.getName() + " has successfully participated in the event:");
+            contentStream.endText();
+
+            y -= 30;
+
+            // Detalhes do Evento
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+            contentStream.newLineAtOffset(margin, y);
+            contentStream.showText("Event: ");
+            contentStream.setFont(PDType1Font.HELVETICA, 12);
+            contentStream.showText(this.title);
+            contentStream.endText();
+
+            y -= 20;
+
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+            contentStream.newLineAtOffset(margin, y);
+            contentStream.showText("Date: ");
+            contentStream.setFont(PDType1Font.HELVETICA, 12);
+            contentStream.showText(this.date);
+            contentStream.endText();
+
+            y += 20;
+
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+            contentStream.newLineAtOffset(margin, y);
+            contentStream.showText(text);
+            contentStream.setFont(PDType1Font.HELVETICA, 12);
+            contentStream.endText();
+            
+            contentStream.close();
+            document.save(fileName);
+            
+            ConsolePrinter.printSuccess("PDF Certificate generated successfully: " + fileName);
+
+        } catch (IOException e) {
+            ConsolePrinter.printError("Failed to create PDF certificate: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
 }

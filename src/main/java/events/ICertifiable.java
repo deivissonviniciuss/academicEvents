@@ -2,6 +2,6 @@ package events;
 
 import participants.Participant;
 
-public interface Certifiable {
+public interface ICertifiable {
     void generateCertificate(Participant participant);
 }

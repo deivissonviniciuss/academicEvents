@@ -6,8 +6,9 @@ import util.ConsolePrinter;
 import participants.*;
 import events.*;
 
-
 public class Main {
+    private static final List<Participant> participants = new ArrayList<>();
+    private static final EventManager eventManager = new EventManager();
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -24,110 +25,262 @@ public class Main {
                     displayEventMenu();
                     int choiceEvent = readUserChoice();
 
-                    System.out.print("Digite o nome do evento: ");
+                    System.out.print("Enter the event name: ");
                     String title = scanner.nextLine();
-                        
-                    System.out.print("Digite a data do evento (dd/mm/yyyy): ");
+
+                    System.out.print("Enter the event date (dd/mm/yyyy): ");
                     String date = scanner.nextLine();
 
-                    System.out.print("Digite o local do evento: ");
+                    System.out.print("Enter the event location: ");
                     String location = scanner.nextLine();
 
-                    System.out.print("Digite o modo do evento (IN_PERSON/ONLINE): ");
-                    String modeImput = scanner.nextLine();
+                    System.out.print("Enter the event mode (IN_PERSON/ONLINE): ");
+                    String modeInput = scanner.nextLine();
+
+                    System.out.print("Enter event capacity: ");
+                    int capacity = Integer.parseInt(scanner.nextLine());
+
+                    System.out.print("Enter event description: ");
+                    String description = scanner.nextLine();
+
+                    EventMode mode = EventMode.valueOf(modeInput.toUpperCase());
+                    Event event = null;
 
                     switch (choiceEvent) {
-                        case 1: 
-                            System.out.print("Digite o nome do palestrante: ");
+                        case 1:
+                            System.out.print("Enter the speaker's name: ");
                             String speaker = scanner.nextLine();
                             event = new Lecture(title, date, location, capacity, description, mode, speaker);
                             break;
                         case 2:
-                            System.out.print("Digite o número de aulas: ");
-                            int numberOfLessons = scanner.nextInt();
+                            System.out.print("Enter the number of lessons: ");
+                            int numberOfLessons = Integer.parseInt(scanner.nextLine());
                             event = new Course(title, date, location, capacity, description, mode, numberOfLessons);
                             break;
                         case 3:
-                            System.out.print("Digite o tema principal: ");
-                            int mainTopic = scanner.nextInt();
+                            System.out.print("Enter the main topic: ");
+                            String mainTopic = scanner.nextLine();
                             event = new AcademicFair(title, date, location, capacity, description, mode, mainTopic);
                             break;
                         case 4:
-                            System.out.print("Digite a duração do curso (em horas): ");
-                            String durationInHours = scanner.nextLine();
+                            System.out.print("Enter the course duration (in hours): ");
+                            int durationInHours = Integer.parseInt(scanner.nextLine());
                             event = new Workshop(title, date, location, capacity, description, mode, durationInHours);
                             break;
                         default:
-                            System.out.println("Opção inválida!");
-                            return;
+                            System.out.println("Invalid option!");
+                            break;
                     }
-                    if(event != NULL){
-                        EventManager.addEvent(event);
+
+                    if (event != null) {
+                        eventManager.addEvent(event);
                     }
                     break;
+
                 case 2:
-                
+                    displayParticipantMenu();
                     int choiceParticipant = readUserChoice();
 
-                    System.out.print("Digite o nome do participante: ");
+                    System.out.print("Enter the participant's name: ");
                     String name = scanner.nextLine();
-                        
-                    System.out.print("Digite o email do participante: ");
+
+                    System.out.print("Enter the participant's email: ");
                     String email = scanner.nextLine();
 
+                    Participant participant = null;
+
                     switch (choiceParticipant) {
-                        case 1: 
-                            System.out.print("Digite o employee Id: ");
+                        case 1:
+                            System.out.print("Enter the employee ID: ");
                             String employeeId = scanner.nextLine();
 
-                            System.out.print("Digite o departamento: ");
+                            System.out.print("Enter the department: ");
                             String department = scanner.nextLine();
 
                             participant = new Professor(name, email, employeeId, department);
                             break;
                         case 2:
-                            System.out.print("Digite o enrollment Id: ");
+                            System.out.print("Enter the enrollment ID: ");
                             String enrollmentId = scanner.nextLine();
 
                             participant = new Student(name, email, enrollmentId);
                             break;
                         case 3:
-                            System.out.print("Digite o guest Id: ");
+                            System.out.print("Enter the guest ID: ");
                             String guestId = scanner.nextLine();
 
                             participant = new Guest(name, email, guestId);
                             break;
                         default:
-                            System.out.println("Opção inválida!");
-                            return;
+                            System.out.println("Invalid option!");
+                            break;
                     }
-                    if(participant != NULL){
-                        Participant.addParticipant(participant);
+
+                    if (participant != null) {
+                        participants.add(participant);
                     }
                     break;
+
                 case 3:
                     ConsolePrinter.printSectionHeader("Register Participant in Event");
-                    // TODO: Implement the logic to register a participant here.
+                    if (eventManager.getAllEvents().isEmpty()) {
+                        ConsolePrinter.printError("No events available.");
+                        break;
+                    }
+                    if (participants.isEmpty()) {
+                        ConsolePrinter.printError("No participants available.");
+                        break;
+                    }
+                    
+                    System.out.println("Available Events:");
+                    List<Event> allEvents = eventManager.getAllEvents();
+                    for (int i = 0; i < allEvents.size(); i++) {
+                        System.out.println((i + 1) + ". " + allEvents.get(i).getTitle()+ "(" + allEvents.get(i).getEventType() + ")");
+                    }
+                    System.out.print("Select event by number: ");
+                    int eventIndex = readUserChoice() - 1;
+
+                    if (eventIndex < 0 || eventIndex >= allEvents.size()) {
+                        ConsolePrinter.printError("Invalid event selection.");
+                        break;
+                    }
+
+                    Event selectedEvent = allEvents.get(eventIndex);
+
+                    System.out.println("Available Participants:");
+                    List<Participant> allParticipants = participants;
+                    for (int i = 0; i < allParticipants.size(); i++) {
+                        System.out.println((i + 1) + ". " + allParticipants.get(i).getName() + "(" + allParticipants.get(i).getParticipantType() + ")");
+                    }
+                    System.out.print("Select participant by number: ");
+                    int participantIndex = readUserChoice() - 1;
+
+                    if (participantIndex < 0 || participantIndex >= allParticipants.size()) {
+                        ConsolePrinter.printError("Invalid participant selection.");
+                        break;
+                    }
+
+                    Participant selectedParticipant = allParticipants.get(participantIndex);
+                    selectedEvent.registerParticipant(selectedParticipant);
                     break;
-                case 4:
+
+                case 4: {
                     ConsolePrinter.printSectionHeader("List Events (Reports)");
-                    // TODO: Implement the logic to show event reports here.
+                    System.out.println("1 - List by type");
+                    System.out.println("2 - List by date");
+                    System.out.println("3 - List all events");
+                    System.out.println("4 - Main menu");
+                    System.out.print("Choose an option: ");
+                    int reportOption = readUserChoice();
+
+                    switch (reportOption) {
+                        case 1: {
+                            System.out.print("Enter type (Lecture, Course, Workshop, AcademicFair): ");
+                            String reportType = scanner.nextLine();
+                            eventManager.listEventsByType(reportType);
+                            break;
+                        }
+                        case 2: {
+                            System.out.print("Enter date (dd/mm/yyyy): ");
+                            String reportDate = scanner.nextLine();
+                            eventManager.listEventsByDate(reportDate);
+                            break;
+                        }
+                        case 3: {
+                            List<Event> events = eventManager.getAllEvents();
+                            if (events.isEmpty()) {
+                                ConsolePrinter.printError("No events available.");
+                            } else {
+                                ConsolePrinter.printSectionHeader("List of Events");
+                                for (Event e : events) {
+                                    System.out.println("- " + e.getTitle() + " (" + e.getEventType() + ") on " + e.getDate());
+                                }
+                            }
+                            break;
+                        }
+                        case 4: {
+                            break;
+                        }
+                        default:  {
+                            ConsolePrinter.printError("Invalid report option.");
+                        }
+                    }
                     break;
-                case 5:
+                }
+                case 5: {
                     ConsolePrinter.printSectionHeader("Generate Certificate");
-                    // TODO: Implement the logic to generate a certificate here.
-                    break;
-                case 0:
+                    if (eventManager.getAllEvents().isEmpty()) {
+                        ConsolePrinter.printError("No events available.");
+                        break;
+                    }
+                    if (participants.isEmpty()) {
+                        ConsolePrinter.printError("No participants available.");
+                        break;
+                    }
+
+                    System.out.println("Available Events:");
+                    List<Event> certEvents = eventManager.getAllEvents();
+                    for (int i = 0; i < certEvents.size(); i++) {
+                        System.out.println((i + 1) + ". " + certEvents.get(i).getTitle() + "(" + certEvents.get(i).getEventType() + ")");
+                    }
+                    System.out.print("Select event by number: ");
+                    int certEventIndex = readUserChoice() - 1;
+                    if (certEventIndex < 0 || certEventIndex >= certEvents.size()) {
+                        ConsolePrinter.printError("Invalid event selection.");
+                        break;
+                    }
+
+                    Event certEvent = certEvents.get(certEventIndex);
+
+                    System.out.println("Participants registered in this event:");
+                    List<Participant> eventParticipants = certEvent.getParticipants();
+                    if (eventParticipants.isEmpty()) {
+                        ConsolePrinter.printError("No participants registered in this event.");
+                        break;
+                    }
+                    for (int i = 0; i < eventParticipants.size(); i++) {
+                        System.out.println((i + 1) + ". " + eventParticipants.get(i).getName() + "(" + eventParticipants.get(i).getParticipantType() + ")");
+                    }
+
+                    System.out.print("Select participant by number: ");
+                    int certPartIndex = readUserChoice() - 1;
+                    if (certPartIndex < 0 || certPartIndex >= eventParticipants.size()) {
+                        ConsolePrinter.printError("Invalid participant selection.");
+                        break;
+                    }
+
+                    System.out.println("1: Certificate in console");
+                    System.out.println("2: Certificate in PDF");
+                    System.out.print("Choose an option: ");
+                    int chooseCertificateType = readUserChoice();
+
+                    Participant certParticipant = eventParticipants.get(certPartIndex);
+
+                    switch(chooseCertificateType){
+                        case 1:{
+                            certEvent.generateCertificate(certParticipant);
+                            break;
+                        }
+                        case 2:{
+                            certEvent.generateCertificate(certParticipant, "PDF");
+                            break;
+                        }
+                    }
+                    
+                }
+                case 0: {
                     running = false;
                     break;
-                default:
+                }
+                default:{
                     ConsolePrinter.printError("Invalid option. Please try again.");
                     break;
+                }
             }
-            
+
             if (running) {
-                 System.out.print("\nPress Enter to continue...");
-                 scanner.nextLine();
+                System.out.print("\nPress Enter to continue...");
+                scanner.nextLine();
             }
         }
 
@@ -136,25 +289,35 @@ public class Main {
         scanner.close();
     }
 
-
     private static void displayMenu() {
         ConsolePrinter.printTitle("ACADEMIC EVENTS MANAGEMENT SYSTEM");
-        ConsolePrinter.printText("1: Add New Event ");
-        ConsolePrinter.printText("2: Add New Participant ");
-        ConsolePrinter.printText("3: Register Participant in Event ");
-        ConsolePrinter.printText("4: List Events (Reports) ");
-        ConsolePrinter.printText("5: Generate Certificate ");
+        ConsolePrinter.printText("1: Add New Event");
+        ConsolePrinter.printText("2: Add New Participant");
+        ConsolePrinter.printText("3: Register Participant in Event");
+        ConsolePrinter.printText("4: List Events (Reports)");
+        ConsolePrinter.printText("5: Generate Certificate");
         ConsolePrinter.printText("0: Exit");
         System.out.print("\nChoose an option: ");
     }
 
     private static void displayEventMenu() {
+        ConsolePrinter.printSectionHeader("Add New Event");
+        System.out.println("Choose the type of event:");
+        System.out.println("1 - Lecture");
+        System.out.println("2 - Course");
+        System.out.println("3 - Academic Fair");
+        System.out.println("4 - Workshop");
+        System.out.println("0 - Back");
+        System.out.print("\nChoose an option: ");
+    }
+
+    private static void displayParticipantMenu() {
         ConsolePrinter.printSectionHeader("Add New Participant");
-        System.out.println("Escolha o tipo de participante:");
-        System.out.println("1 - Professor (Lecture)");
-        System.out.println("2 - Aluno");
-        System.out.println("3 - Convidado");
-        System.out.println("0 - Voltar");
+        System.out.println("Choose the type of participant:");
+        System.out.println("1 - Professor");
+        System.out.println("2 - Student");
+        System.out.println("3 - Guest");
+        System.out.println("0 - Back");
         System.out.print("\nChoose an option: ");
     }
 
@@ -170,4 +333,4 @@ public class Main {
             return -1; // Indicates invalid (non-numeric) input
         }
     }
-}
+} 

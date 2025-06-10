@@ -25,6 +25,12 @@ public class EventManager {
         System.out.println();
     }
 
+    private void printEventInfo(Event event, String text) {
+        System.out.println("Title: " + event.getTitle());
+        System.out.println(event.getSpecificInfoEvent());
+        System.out.println(text);
+    }
+
     public void listEventsByType(String type) {
         ConsolePrinter.printTitle("Event Report by Type: " + type);
         int count = 0;

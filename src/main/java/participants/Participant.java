@@ -1,7 +1,9 @@
 package participants;
 
+import java.util.*;
+
 public abstract class Participant {
-    private List<Participant> participants = new ArrayList<>();
+    protected List<Participant> participants = new ArrayList<>();
     protected String name;
     protected String email;
 
