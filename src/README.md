@@ -55,7 +55,7 @@ This project uses **Maven**. You do **not need any IDE** to run the system — j
 
 ```bash
 mvn clean compile
-
+```
 ### 2. Run the system
 
 ```bash
