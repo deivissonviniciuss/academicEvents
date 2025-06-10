@@ -344,10 +344,6 @@ public class Main {
         System.out.print("\nChoose an option: ");
     }
 
-    /**
-     * Reads and validates the user's integer input for the menu.
-     * @return The user's choice, or -1 if the input is invalid.
-     */
     private static int readUserChoice() {
         try {
             String input = scanner.nextLine();
