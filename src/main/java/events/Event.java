@@ -135,21 +135,19 @@ public abstract class Event implements ICertifiable
 
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
-            // Define a posição inicial e as fontes
             float y = 700;
             float margin = 50;
-            float width = page.getMediaBox().getWidth() - 2 * margin;
 
-            // Título do Certificado
+            // Título do certificado
             contentStream.beginText();
             contentStream.setFont(PDType1Font.HELVETICA_BOLD, 20);
             contentStream.newLineAtOffset(margin, y);
             contentStream.showText("CERTIFICATE OF PARTICIPATION");
             contentStream.endText();
 
-            y -= 50; // Move para baixo
+            y -= 50;
 
-            // Corpo do texto
+            // Texto principal
             contentStream.beginText();
             contentStream.setFont(PDType1Font.HELVETICA, 12);
             contentStream.newLineAtOffset(margin, y);
@@ -158,38 +156,47 @@ public abstract class Event implements ICertifiable
 
             y -= 30;
 
-            // Detalhes do Evento
+            // Informações do evento
+            String[] eventDetails = {
+                "Title: " + this.title,
+                "Date: " + this.date,
+                "Location: " + this.location,
+                "Mode: " + this.mode,
+                "Capacity: " + this.capacity,
+                "Description: " + this.description,
+                "Event Type: " + this.getEventType(),
+                "Specific Info: " + this.getSpecificInfoEvent()
+            };
+
+            for (String line : eventDetails) {
+                y -= 20;
+                contentStream.beginText();
+                contentStream.setFont(PDType1Font.HELVETICA, 12);
+                contentStream.newLineAtOffset(margin, y);
+                contentStream.showText(line);
+                contentStream.endText();
+            }
+
+            y -= 30;
+
+            // Informações do participante
             contentStream.beginText();
             contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
             contentStream.newLineAtOffset(margin, y);
-            contentStream.showText("Event: ");
-            contentStream.setFont(PDType1Font.HELVETICA, 12);
-            contentStream.showText(this.title);
+            contentStream.showText("Participant Info: ");
             contentStream.endText();
 
             y -= 20;
 
             contentStream.beginText();
-            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
-            contentStream.newLineAtOffset(margin, y);
-            contentStream.showText("Date: ");
             contentStream.setFont(PDType1Font.HELVETICA, 12);
-            contentStream.showText(this.date);
-            contentStream.endText();
-
-            y += 0;
-
-            contentStream.beginText();
-            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
             contentStream.newLineAtOffset(margin, y);
-            contentStream.showText(text);
-            contentStream.setFont(PDType1Font.HELVETICA, 12);
             contentStream.showText(participant.getSpecificInfoParticipant());
             contentStream.endText();
-            
+
             contentStream.close();
             document.save(fileName);
-            
+
             ConsolePrinter.printSuccess("PDF Certificate generated successfully: " + fileName);
 
         } catch (IOException e) {
@@ -197,5 +204,6 @@ public abstract class Event implements ICertifiable
             e.printStackTrace();
         }
     }
+
     
 }

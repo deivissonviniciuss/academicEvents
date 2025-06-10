@@ -19,7 +19,7 @@ public class Main {
         while (running) {
             displayMenu();
             int choice = readUserChoice();
-            if (choice < 0 || choice > 4) {
+            if (choice < 0 || choice > 5) {
                 ConsolePrinter.printError("Invalid option!");
                 break;
             }
