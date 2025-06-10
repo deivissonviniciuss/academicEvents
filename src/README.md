@@ -1,55 +1,64 @@
 # Academic Event Management System
 
 This is a Java-based academic event management system developed as a university assignment.  
-It models different types of events and participants, and allows registration, certificate generation, and event reporting.
+It allows the registration of events and participants, the association between them, certificate generation, and event reporting — all through a command-line interface.
 
 ---
 
 ## 📚 Features
 
-- Supports different **event types**:
+- Register different types of **events**:
   - `Lecture`
   - `Course` (only accepts `Student`)
   - `Workshop`
   - `AcademicFair`
 
-- Supports different **participant roles**:
+- Register different types of **participants**:
   - `Student`
   - `Professor`
   - `Guest`
 
-- Event **registration with capacity control**
-- Event **mode**: `IN_PERSON` or `ONLINE`, using an `EventMode` enum
-- **Certificate generation** (console and PDF format)
-- Prevents **duplicate participant IDs**
-- Generates **event reports**:
-  - By **type**
-  - By **date**
-- Clean and colored console interface using Jansi
+- Events can be either `IN_PERSON` or `ONLINE`, using an `EventMode` enum
+- Registration control with **event capacity limit**
+- Prevention of **duplicate participant IDs** (based on enrollment ID, employee ID, or guest ID)
+- **Certificate generation**:
+  - Printed in console
+  - PDF (using Apache PDFBox)
+- Event reports by:
+  - **Type**
+  - **Date**
+- Colored and organized console interface (using Jansi)
 
 ---
 
-## ⚙️ Technologies Used
+## 🧰 Technologies and Tools
 
 - Java 11+
 - Maven
-- VS Code + GitHub Codespaces
-- **Jansi** – Console output formatting with colors
-- **Apache PDFBox** – PDF certificate generation
-- OOP principles:
-  - Inheritance
+- Jansi (for console color formatting)
+- Apache PDFBox (for PDF certificate generation)
+- Object-Oriented Programming:
   - Abstraction
-  - Encapsulation
+  - Inheritance
   - Polymorphism
+  - Encapsulation
   - Method Overloading
   - Interfaces
 
 ---
 
-## ▶️ How to Run
+## ▶️ How to Compile and Run
 
-### 1. Clone the repository
+This project uses **Maven**. You do **not need any IDE** to run the system — just Java and Maven installed.
+
+### 1. Compile the project
 
 ```bash
-git clone https://github.com/your-username/academicEvents.git
-cd academicEvents
+mvn clean compile
+
+### 2. Run the system
+
+```bash
+mvn exec:java
+
+
