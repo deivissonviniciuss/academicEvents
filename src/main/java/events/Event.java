@@ -15,7 +15,6 @@ public abstract class Event implements ICertifiable
 {
     protected List<Participant> participants = new ArrayList<>();
 
-    private static int eventCount = 0;
     protected String title;
     protected String date;
     protected String location;
@@ -30,11 +29,6 @@ public abstract class Event implements ICertifiable
         this.capacity = capacity;
         this.description = description;
         this.mode = mode;
-        eventCount++;
-    }
-
-    public static int getEventCount() {
-        return eventCount;
     }
 
     public List<Participant> getParticipants(){
@@ -82,13 +76,19 @@ public abstract class Event implements ICertifiable
         }
 
         if (mode == EventMode.ONLINE) {
+            participants.add(participant);
             System.out.println("Participant " + participant.getName() + "("+ participant.getParticipantType()+")" + " registered successfully for the " + getEventType() + "("+ getMode() +").");
             System.out.println("A link will be sent to the participant's email.");
-            participants.add(participant);
+
+            int remaining = capacity - participants.size();
+            System.out.println("Remaining slots: " + remaining);
             return;
         } else if (mode == EventMode.IN_PERSON) {
             participants.add(participant);
             System.out.println("Participant " + participant.getName()+ "("+ participant.getParticipantType()+")" + " registered successfully for the " + getEventType() + "("+ getMode() +").");
+            
+            int remaining = capacity - participants.size();
+            System.out.println("Remaining slots: " + remaining);
         } else {
             System.out.println("Error: Unknown event mode.");
         }
@@ -177,13 +177,14 @@ public abstract class Event implements ICertifiable
             contentStream.showText(this.date);
             contentStream.endText();
 
-            y += 20;
+            y += 0;
 
             contentStream.beginText();
             contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
             contentStream.newLineAtOffset(margin, y);
             contentStream.showText(text);
             contentStream.setFont(PDType1Font.HELVETICA, 12);
+            contentStream.showText(participant.getSpecificInfoParticipant());
             contentStream.endText();
             
             contentStream.close();

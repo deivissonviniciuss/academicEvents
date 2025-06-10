@@ -19,16 +19,29 @@ public class Main {
         while (running) {
             displayMenu();
             int choice = readUserChoice();
+            if (choice < 0 || choice > 4) {
+                ConsolePrinter.printError("Invalid option!");
+                break;
+            }
 
             switch (choice) {
+                case 0: {
+                    running = false;
+                    break;
+                }
                 case 1:
                     displayEventMenu();
                     int choiceEvent = readUserChoice();
 
+                    if (choiceEvent < 0 || choiceEvent > 4) {
+                        ConsolePrinter.printError("Invalid option!");
+                        break;
+                    }
+
                     System.out.print("Enter the event name: ");
                     String title = scanner.nextLine();
 
-                    System.out.print("Enter the event date (dd/mm/yyyy): ");
+                    System.out.print("Enter the event date (yyyy/mm/dd): ");
                     String date = scanner.nextLine();
 
                     System.out.print("Enter the event location: ");
@@ -47,29 +60,27 @@ public class Main {
                     Event event = null;
 
                     switch (choiceEvent) {
-                        case 1:
+                        case 1: {
                             System.out.print("Enter the speaker's name: ");
                             String speaker = scanner.nextLine();
                             event = new Lecture(title, date, location, capacity, description, mode, speaker);
                             break;
-                        case 2:
+                        } case 2: {
                             System.out.print("Enter the number of lessons: ");
                             int numberOfLessons = Integer.parseInt(scanner.nextLine());
                             event = new Course(title, date, location, capacity, description, mode, numberOfLessons);
                             break;
-                        case 3:
+                        } case 3: {
                             System.out.print("Enter the main topic: ");
                             String mainTopic = scanner.nextLine();
                             event = new AcademicFair(title, date, location, capacity, description, mode, mainTopic);
                             break;
-                        case 4:
+                        } case 4: {
                             System.out.print("Enter the course duration (in hours): ");
                             int durationInHours = Integer.parseInt(scanner.nextLine());
                             event = new Workshop(title, date, location, capacity, description, mode, durationInHours);
                             break;
-                        default:
-                            System.out.println("Invalid option!");
-                            break;
+                        }
                     }
 
                     if (event != null) {
@@ -80,6 +91,11 @@ public class Main {
                 case 2:
                     displayParticipantMenu();
                     int choiceParticipant = readUserChoice();
+
+                    if (choiceParticipant < 0 || choiceParticipant > 3) {
+                        ConsolePrinter.printError("Invalid option!");
+                        break;
+                    }
 
                     System.out.print("Enter the participant's name: ");
                     String name = scanner.nextLine();
@@ -111,12 +127,13 @@ public class Main {
 
                             participant = new Guest(name, email, guestId);
                             break;
-                        default:
-                            System.out.println("Invalid option!");
-                            break;
                     }
 
                     if (participant != null) {
+                        if (isDuplicateId(participant)) {
+                            ConsolePrinter.printError("A participant with the same ID already exists.");
+                            break;
+                        }
                         participants.add(participant);
                     }
                     break;
@@ -172,6 +189,11 @@ public class Main {
                     System.out.println("4 - Main menu");
                     System.out.print("Choose an option: ");
                     int reportOption = readUserChoice();
+
+                    if (reportOption < 0 || reportOption > 3) {
+                        ConsolePrinter.printError("Invalid option!");
+                        break;
+                    }
 
                     switch (reportOption) {
                         case 1: {
@@ -254,6 +276,11 @@ public class Main {
                     System.out.print("Choose an option: ");
                     int chooseCertificateType = readUserChoice();
 
+                    if (chooseCertificateType < 0 || chooseCertificateType > 2) {
+                        ConsolePrinter.printError("Invalid option!");
+                        break;
+                    }
+
                     Participant certParticipant = eventParticipants.get(certPartIndex);
 
                     switch(chooseCertificateType){
@@ -266,10 +293,6 @@ public class Main {
                             break;
                         }
                     }
-                    
-                }
-                case 0: {
-                    running = false;
                     break;
                 }
                 default:{
@@ -332,5 +355,30 @@ public class Main {
         } catch (NumberFormatException e) {
             return -1; // Indicates invalid (non-numeric) input
         }
+    }
+
+    public static boolean isDuplicateId(Participant newParticipant) {
+        for (Participant p : participants) {
+            if (p instanceof Professor && newParticipant instanceof Professor) {
+                Professor existing = (Professor) p;
+                Professor incoming = (Professor) newParticipant;
+                if (existing.getEmployeeId().equalsIgnoreCase(incoming.getEmployeeId())) {
+                    return true;
+                }
+            } else if (p instanceof Student && newParticipant instanceof Student) {
+                Student existing = (Student) p;
+                Student incoming = (Student) newParticipant;
+                if (existing.getEnrollmentNumber().equalsIgnoreCase(incoming.getEnrollmentNumber())) {
+                    return true;
+                }
+            } else if (p instanceof Guest && newParticipant instanceof Guest) {
+                Guest existing = (Guest) p;
+                Guest incoming = (Guest) newParticipant;
+                if (existing.getGuestId().equalsIgnoreCase(incoming.getGuestId())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 } 
