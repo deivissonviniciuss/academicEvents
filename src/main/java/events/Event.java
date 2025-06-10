@@ -138,7 +138,6 @@ public abstract class Event implements ICertifiable
             float y = 700;
             float margin = 50;
 
-            // Título do certificado
             contentStream.beginText();
             contentStream.setFont(PDType1Font.HELVETICA_BOLD, 20);
             contentStream.newLineAtOffset(margin, y);
@@ -147,7 +146,6 @@ public abstract class Event implements ICertifiable
 
             y -= 50;
 
-            // Texto principal
             contentStream.beginText();
             contentStream.setFont(PDType1Font.HELVETICA, 12);
             contentStream.newLineAtOffset(margin, y);
@@ -179,7 +177,6 @@ public abstract class Event implements ICertifiable
 
             y -= 30;
 
-            // Informações do participante
             contentStream.beginText();
             contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
             contentStream.newLineAtOffset(margin, y);
