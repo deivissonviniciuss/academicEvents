@@ -1,0 +1,15 @@
+br/edu/ifba/inf008/util/ConsolePrinter.class
+br/edu/ifba/inf008/participants/Participant.class
+br/edu/ifba/inf008/events/EventMode.class
+br/edu/ifba/inf008/events/Course.class
+br/edu/ifba/inf008/participants/Professor.class
+br/edu/ifba/inf008/main/Main.class
+br/edu/ifba/inf008/events/Event.class
+br/edu/ifba/inf008/main/App.class
+br/edu/ifba/inf008/participants/Guest.class
+br/edu/ifba/inf008/events/Workshop.class
+br/edu/ifba/inf008/events/AcademicFair.class
+br/edu/ifba/inf008/events/Lecture.class
+br/edu/ifba/inf008/events/EventManager.class
+br/edu/ifba/inf008/events/ICertifiable.class
+br/edu/ifba/inf008/participants/Student.class
