@@ -6,6 +6,7 @@
 /workspaces/academicEvents/src/main/java/events/ICertifiable.java
 /workspaces/academicEvents/src/main/java/events/Lecture.java
 /workspaces/academicEvents/src/main/java/events/Workshop.java
+/workspaces/academicEvents/src/main/java/main/App.java
 /workspaces/academicEvents/src/main/java/main/Main.java
 /workspaces/academicEvents/src/main/java/participants/Guest.java
 /workspaces/academicEvents/src/main/java/participants/Participant.java
