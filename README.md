@@ -5,7 +5,7 @@ It allows the registration of events and participants, the association between t
 
 ---
 
-## 📚 Features
+## Features
 
 - Register different types of **events**:
   - `Lecture`
@@ -31,9 +31,9 @@ It allows the registration of events and participants, the association between t
 
 ---
 
-## 🧰 Technologies and Tools
+## Technologies and Tools
 
-- Java 11+
+- Java 17+
 - Maven
 - Jansi (for console color formatting)
 - Apache PDFBox (for PDF certificate generation)
@@ -47,7 +47,7 @@ It allows the registration of events and participants, the association between t
 
 ---
 
-## ▶️ How to Compile and Run
+## How to Compile and Run
 
 This project uses **Maven**. You do **not need any IDE** to run the system — just Java and Maven installed.
 
